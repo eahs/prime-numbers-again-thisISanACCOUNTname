@@ -25,7 +25,31 @@ namespace PrimeNumbersAgain
 
         static int FindNthPrime(int n)
         {
-            return 0;
+            if (n < 2)
+                {
+                    return new List<int>();
+                }
+
+            bool[] isPrime = new bool[n + 1];
+            for (int i = 2; i <= n; i++)
+                isPrime[i] = true;
+
+            for (int i = 2; i * i <= n; i++)
+            {
+                if (isPrime[i])
+                {
+                    for (int j = i * i; j <= n; j += i)
+                        isPrime[j] = false;
+                }
+            }
+
+            List<int> primes = new List<int>();
+            for (int i = 2; i <= n; i++)
+            {
+                if (isPrime[i])
+                    primes.Add(i);
+            }
+            return primes;
         }
 
         static int GetNumber()
@@ -63,7 +87,7 @@ namespace PrimeNumbersAgain
             Console.WriteLine("\n");
             Console.Write("Time Check: ");
 
-            if (time <= 10)
+            if (time <= 3)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Pass");
