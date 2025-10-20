@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace PrimeNumbersAgain
 {
@@ -25,31 +27,45 @@ namespace PrimeNumbersAgain
 
         static int FindNthPrime(int n)
         {
+            // the sieve of eratosthenes, with built in exceptions
+
+            if (n == 1)
+            {
+                return 2;
+            }
+
             if (n < 2)
-                {
-                    return new List<int>();
-                }
+            {
+                return 3;
+            }
 
-            bool[] isPrime = new bool[n + 1];
-            for (int i = 2; i <= n; i++)
+
+            var limit = 2000000; // upper limit to find primes
+            bool[] isPrime = new bool[limit + 1];
+            for (int i = 2; i <= limit; i++) 
+            { 
                 isPrime[i] = true;
-
-            for (int i = 2; i * i <= n; i++)
+            }   
+            for (int i = 2; i * i <= limit; i++)
+                {
+                if (isPrime[i])
+                {
+                    for (int j = i * i; j <= limit; j += i)
+                    {
+                        isPrime[j] = false;
+                    }
+                }
+            }
+            List<int> primes = new List<int>();
+            for (int i = 2; i <= limit; i++)
             {
                 if (isPrime[i])
                 {
-                    for (int j = i * i; j <= n; j += i)
-                        isPrime[j] = false;
+                    primes.Add(i);
                 }
             }
+            return primes[n - 1]; // return the nth prime (1-based index)
 
-            List<int> primes = new List<int>();
-            for (int i = 2; i <= n; i++)
-            {
-                if (isPrime[i])
-                    primes.Add(i);
-            }
-            return primes;
         }
 
         static int GetNumber()
