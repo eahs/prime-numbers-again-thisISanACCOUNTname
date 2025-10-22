@@ -30,12 +30,17 @@ namespace PrimeNumbersAgain
                 throw new ArgumentException("n must be >= 1", nameof(n));
             }
 
-            // quick returns for small n
+            // quick returns for small n 1 though 10
             if (n == 1) return 2;
             if (n == 2) return 3;
             if (n == 3) return 5;
             if (n == 4) return 7;
             if (n == 5) return 11;
+            if (n == 6) return 13;
+            if (n == 7) return 17;
+            if (n == 8) return 19;  
+            if (n == 9) return 23;
+            if (n == 10) return 29;
 
             // estimate an upper bound for the nth prime using p_n < n (ln n + ln ln n) for n >= 6
             double dn = n;
